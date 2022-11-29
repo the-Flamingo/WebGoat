@@ -102,6 +102,9 @@ public class Servers {
         List<Server> servers = new ArrayList<>();
         try (
             Connection connection = dataSource.getConnection();
+            if (!column.matches("[a-z]+")) {
+				throw new Exception("Ich boch dich");
+			}
             PreparedStatement preparedStatement = connection.prepareStatement("select id, hostname, ip, mac, status, description from servers  where status <> \'out of order\' order by " + column)) {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
